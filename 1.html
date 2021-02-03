@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Soal 1</title>
+	<style type="text/css">
+		.container{
+			width: 70%;
+			margin: 20px auto;
+		}
+		.content{
+			display: flex;
+		}
+		.tipe{
+			flex-basis: 50%;
+			text-align: center;
+		}
+		.kredit{
+			flex-basis: 50%;
+			text-align: center;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="content">
+			<div class="tipe">
+				<label>Pilih Tipe Rumah</label>
+				<select id="tipeid">
+					<option value="Rose">Rose</option>
+					<option value="Gold">Gold</option>
+					<option value="Platinum">Platinum</option>
+				</select>
+			</div>
+
+			<div class="kredit">
+				<label>Pilih Lama Kredit</label>
+				<select id="kreditid">
+					<option>Lama Kredit</option>
+					<option value="12">12 Bulan</option>
+					<option value="18">18 Bulan</option>
+					<option value="24">24 Bulan</option>
+				</select>
+			</div>
+		</div>
+		<button onclick="proses()">Proses</button>
+
+		<div class="hasil">
+			<h3><span>Type Rumah : </span><span id="cetakTipe"></span></h3>
+			<h3><span>Harga Rumah : </span><span id="cetakHarga"></span></h3>
+			<h3><span>Uang Muka : </span><span id="cetakDp"></span></h3>
+			<h3><span>Sisa : </span><span id="cetakSisa"></span></h3>
+			<h3><span>Lama Kredit : </span><span id="cetakKredit"></span></h3>
+			<h3><span>Angsuran : </span><span id="cetakAngsuran"></span></h3>
+
+			<table border="1" width="100%">
+				<thead>
+					<tr>
+						<th width="20%">Bulan Ke</th>
+						<th>Angsuran</th>
+						<th>Sisa</th>
+					</tr>
+				</thead>
+				<tbody id="isiTabel">			
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<script>
+		
+	function proses(){
+		eTipe = document.getElementById("tipeid");
+		TipeValue = eTipe.options[eTipe.selectedIndex].value;
+		eKredit = document.getElementById("kreditid");
+		KreditValue = eKredit.options[eKredit.selectedIndex].value;
+
+		return kreditRumah(TipeValue, KreditValue)
+	}
+
+	function kreditRumah(tipe, lamaKredit){
+		if(tipe == 'Rose'){
+			var harga = 120000000;
+			var dp = harga * 20 / 100;
+		} else 
+		if(tipe == 'Gold'){
+			var harga = 300000000;
+			var dp = harga * 20 / 100;
+		} else 
+		if(tipe == 'Platimun'){
+			var harga = 360000000;
+			var dp = harga * 20 / 100;
+		}
+
+		var sisa = harga - dp;
+		var angsuran = sisa / lamaKredit;
+
+		document.getElementById("cetakTipe").innerHTML = tipe;
+		document.getElementById("cetakHarga").innerHTML = harga;
+		document.getElementById("cetakDp").innerHTML = dp;
+		document.getElementById("cetakSisa").innerHTML = sisa;
+		document.getElementById("cetakKredit").innerHTML = lamaKredit;
+		document.getElementById("cetakAngsuran").innerHTML = angsuran;
+
+		var data = []
+		for(var i=1; i <= lamaKredit; i++) {
+			sisa -= angsuran
+			var html = '<tr><td>'+i+'</td><td>Rp. '+angsuran+'</td><td>Rp. '+sisa+'</td></tr>'
+			data.push(html)
+			document.getElementById("isiTabel").innerHTML = data.join(' ')
+		}
+		
+	}
+	</script>
+</body>
+</html>
