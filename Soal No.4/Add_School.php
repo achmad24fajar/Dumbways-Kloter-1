@@ -1,6 +1,6 @@
 <?php
 
-include('Posts.php');
+include('Functions/Posts.php');
 
 session_start();
 if(!isset($_SESSION["user"])) header("Location: Login.php");
@@ -11,19 +11,19 @@ if(isset($_POST['submit'])){
 	$npsn = $_POST['npsn'];
 	$name_school = $_POST['name_school'];
 	$address = $_POST['address'];
-	$logo_school = $_POST['logo_school'];
+	$logo_school = $_FILES['logo_school'];
 	$level = $_POST['level'];
 	$status = $_POST['status'];
 	$user_id = $_SESSION['user']['id'];
 
 	$save = $posts->create($npsn, $name_school, $address, $logo_school, $level, $status, $user_id);
-	if($save){
-		header('Location: Dashboard.php');
-	}
-
+	// if($save){
+	// 	header('Location: Dashboard.php');
+	// }
 }
 
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>

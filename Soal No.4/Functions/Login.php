@@ -1,19 +1,9 @@
 <?php
 
-/**
- * 
- */
-class Login
-{
-	public $dbconn;
+include('Queries/Connection.php');
 
-	public function __construct(){
-		try {
-			$this->dbconn = new PDO('mysql:dbname=dbschool;host=127.0.0.1', "root", "");
-		} catch(PDOexception $e) {
-			echo 'Connection Failed: '. $e->getMessage();
-		}
-	}
+class Login extends Connection
+{
 
 	public function sign_in($email, $password){
 	    $sql = "SELECT * FROM user WHERE email=:email OR password=:password";

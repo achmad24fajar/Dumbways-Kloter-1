@@ -1,21 +1,9 @@
 <?php
 
-// include('connection.php');
-/**
- * 
- */
-class Posts
-{
-	public $dbconn;
+include('Queries/Connection.php');
 
-	public function __construct()
-	{
-		try {
-			$this->dbconn = new PDO('mysql:dbname=dbschool;host=127.0.0.1', "root", "");
-		} catch(PDOexception $e) {
-			echo 'Connection Failed: '. $e->getMessage();
-		}
-	}
+class Posts extends Connection
+{
 	
 	public function index(){
 		$posts = $this->dbconn->prepare('SELECT * from school_tb');
@@ -25,12 +13,21 @@ class Posts
 	}
 
 	public function create($npsn, $name_school, $address, $logo_school, $level, $status, $user_id){
+		$file_name = $_FILES['logo_school']['name'];
+		$directory = $_FILES['logo_school']['tmp_name'];
+
+		$target_file = "Images/". basename($file_name);
+
+		if(move_uploaded_file($directory, $target_file)){
+			echo "Sukses";
+		}	
+
 		$create = $this->dbconn->prepare('INSERT INTO school_tb (npsn, name_school, address, logo_school, school_level, status_school, user_id) VALUES (?,?,?,?,?,?,?)');
 
 		$create->bindParam(1, $npsn);
 		$create->bindParam(2, $name_school);
 		$create->bindParam(3, $address);
-		$create->bindParam(4, $logo_school);
+		$create->bindParam(4, $file_name);
 		$create->bindParam(5, $level);
 		$create->bindParam(6, $status);
 		$create->bindParam(7, $user_id);

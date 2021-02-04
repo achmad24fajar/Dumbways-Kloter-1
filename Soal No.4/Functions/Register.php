@@ -1,21 +1,9 @@
 <?php
 
-/**
- * 
- */
-class Register
-{
-	public $dbconn;
-	public $fixId;
+include('Queries/Connection.php');
 
-	function __construct()
-	{
-		try {
-			$this->dbconn = new PDO('mysql:dbname=dbschool;host=127.0.0.1', "root", "");
-		} catch(PDOexception $e) {
-			echo 'Connection Failed: '. $e->getMessage();
-		}
-	}
+class Register extends Connection
+{
 
 	public function create($name, $email, $password){
 		$create = $this->dbconn->prepare('INSERT INTO user (name, email, password) values (?,?,?)');
@@ -29,4 +17,5 @@ class Register
 	}
 
 }
+
 ?>
