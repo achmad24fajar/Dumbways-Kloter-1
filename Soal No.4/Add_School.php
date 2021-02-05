@@ -17,9 +17,9 @@ if(isset($_POST['submit'])){
 	$user_id = $_SESSION['user']['id'];
 
 	$save = $posts->create($npsn, $name_school, $address, $logo_school, $level, $status, $user_id);
-	// if($save){
-	// 	header('Location: Dashboard.php');
-	// }
+	if($save){
+		header('Location: Dashboard.php');
+	}
 }
 
 ?>
@@ -41,19 +41,20 @@ if(isset($_POST['submit'])){
 		<h3>Add New School</h3>
 		<form method="POST" action="" enctype="multipart/form-data">
 			<div class="mb-3">
-				<input type="text" name="npsn" placeholder="NPSN" class="form-control">
+				<input type="text" name="npsn" placeholder="NPSN" class="form-control" required>
 			</div>
 			<div class="mb-3">
-				<input type="text" name="name_school" placeholder="Name School" class="form-control">
+				<input type="text" name="name_school" placeholder="Name School" class="form-control" required>
 			</div>
 			<div class="mb-3">
-				<input type="text" name="address" placeholder="Address" class="form-control">
+				<input type="text" name="address" placeholder="Address" class="form-control" required>
 			</div>
 			<div class="mb-3">
-				<input type="file" name="logo_school" placeholder="Logo School" class="form-control">
+				<input type="file" name="logo_school" placeholder="Logo School" class="form-control" required>
 			</div>
 			<div class="mb-3">
 				<select name="level" class="form-control">
+					<option>Choose Level</option>
 					<option value="SD">SD</option>
 					<option value="SMP">SMP</option>
 					<option value="SMA">SMA</option>
@@ -63,6 +64,7 @@ if(isset($_POST['submit'])){
 			</div>
 			<div class="mb-3">
 				<select name="status" class="form-control">
+					<option>Choose Status</option>
 					<option value="Negeri">Negeri</option>
 					<option value="Swasta">Swasta</option>
 				</select>

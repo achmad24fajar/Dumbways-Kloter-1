@@ -3,7 +3,7 @@
 session_start();
 if(!isset($_SESSION["user"])) header("Location: Login.php");
 
-include('Posts.php');
+include('Functions/Posts.php');
 $posts = new Posts;
 $data = $posts->index();
 
@@ -14,7 +14,7 @@ $data = $posts->index();
 	<title>Dashboard</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 </head>
-<body>
+<body class="bg-dark">
 	<nav class="navbar navbar-dark bg-primary">
 		<div class="container">
 		<a class="navbar-brand">Dashboard</a>
@@ -31,18 +31,23 @@ $data = $posts->index();
 				<a href="Logout.php" class="btn btn-danger">Logout</a>
 			</div>
 		</div>
-
-	    <?php foreach ($data as $row) {?>
-	    	<div class="card mt-4" style="width: 18rem;">
-				<img src="..." class="card-img-top" alt="...">
-				<div class="card-body">
-					<h5 class="card-title"><?php echo $row['name_school'] ?></h5>
-					<p class="card-text"><?php echo $row['status_school'] ?></p>
-					<a href="School_Detail.php?id=<?php echo $row['id'] ?>" class="btn btn-primary">Detail</a>
-					<a href="Edit_School.php?id=<?php echo $row['id'] ?>" class="btn btn-primary">Edit</a>
+		
+		<div class="text-center">
+		    <?php foreach ($data as $row) {?>
+		    	<div class="d-inline-block">
+			    	<div class="card mt-4 bg-primary" style="width: 15rem;">
+						<img src="Functions/Images/<?php echo $row['logo_school'] ?>" class="card-img-top" alt="...">
+						<div class="card-body">
+							<h5 class="card-title"><?php echo $row['name_school'] ?></h5>
+							<p class="card-text"><?php echo $row['status_school'] ?></p>
+							<a href="School_Detail.php?id=<?php echo $row['id'] ?>" class="btn btn-outline-light">Detail</a>
+							<a href="Edit_School.php?id=<?php echo $row['id'] ?>" class="btn btn-outline-light">Edit</a>
+						</div>
+					</div>
 				</div>
-			</div>
-	    <?php } ?>
+		    <?php } ?>
+		</div>
+		
 	</div>
     
 </body>

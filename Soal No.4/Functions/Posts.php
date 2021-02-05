@@ -12,22 +12,22 @@ class Posts extends Connection
 		return $data;
 	}
 
-	public function create($npsn, $name_school, $address, $logo_school, $level, $status, $user_id){
-		$file_name = $_FILES['logo_school']['name'];
-		$directory = $_FILES['logo_school']['tmp_name'];
+	public function create($npsn, $name_school, $address, $logo_school = [], $level, $status, $user_id){
+		$file_name = $logo_school['name'];
+		$directory = $logo_school['tmp_name'];
 
-		$target_file = "Images/". basename($file_name);
+		$target_file = "Functions/Images/". basename($file_name);
 
-		if(move_uploaded_file($directory, $target_file)){
-			echo "Sukses";
-		}	
+		
 
 		$create = $this->dbconn->prepare('INSERT INTO school_tb (npsn, name_school, address, logo_school, school_level, status_school, user_id) VALUES (?,?,?,?,?,?,?)');
 
 		$create->bindParam(1, $npsn);
 		$create->bindParam(2, $name_school);
 		$create->bindParam(3, $address);
-		$create->bindParam(4, $file_name);
+		if(move_uploaded_file($directory, $target_file)){
+			$create->bindParam(4, $file_name);
+		}
 		$create->bindParam(5, $level);
 		$create->bindParam(6, $status);
 		$create->bindParam(7, $user_id);
@@ -51,13 +51,19 @@ class Posts extends Connection
 		return $edit->fetch();
 	}
 
-	public function update($npsn, $name_school, $address, $logo_school, $level, $status){
+	public function update($npsn, $name_school, $address, $logo_school = [], $level, $status){
+		$file_name = $logo_school['name'];
+		$directory = $logo_school['tmp_name'];
+
+		$target_file = "Functions/Images/". basename($file_name);
 		$update = $this->dbconn->prepare('UPDATE school_tb set npsn=?, name_school=?, address=?, logo_school=?, school_level=?, status_school=? where id=?');
 
 		$update->bindParam(1, $npsn);
 		$update->bindParam(2, $name_school);
 		$update->bindParam(3, $address);
-		$update->bindParam(4, $logo_school);
+		if(move_uploaded_file($directory, $target_file)){
+			$create->bindParam(4, $file_name);
+		}
 		$update->bindParam(5, $level);
 		$update->bindParam(6, $status);
 

@@ -3,7 +3,7 @@
 session_start();
 if(!isset($_SESSION["user"])) header("Location: Login.php");
 
-include('Posts.php');
+include('Functions/Posts.php');
 $edit = new Posts;
 if(isset($_GET['id'])){
 	$post = $edit->show($_GET['id']);
